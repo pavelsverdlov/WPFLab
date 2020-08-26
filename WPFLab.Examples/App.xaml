@@ -1,0 +1,14 @@
+﻿<wpflab:LabApplication  
+             x:Class="WPFLab.Examples.App"
+             xmlns:wpflab="clr-namespace:WPFLab;assembly=WPFLab"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:local="clr-namespace:WPFLab.Examples">
+    <wpflab:LabApplication.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="Styles.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </wpflab:LabApplication.Resources>
+</wpflab:LabApplication>
