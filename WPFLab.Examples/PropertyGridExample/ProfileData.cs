@@ -11,27 +11,6 @@ using System.Windows.Controls;
 using WPFLab.PropertyGrid;
 
 namespace WPFLab.Examples.PropertyGridExample {
-    enum ProfileGenders {
-        Male,
-        Female,
-        NonBinary,
-        PreferNotToDisclose,
-        PreferToSelfDescribe
-    }
-
-    class ProfileData {
-        public string FirstName { get; set; }
-        public string LastName { get; set; }
-
-        public string Email { get; set; }
-        public string Phone { get; set; }
-
-        public DateTime Birthday { get; set; }
-
-        public ProfileGenders Gender { get; set; }
-        public string SelfDescribedGender { get; set; }
-    }
-
     enum SomeEnum {
         [Display(Name = "Some enum 1")]
         SomeEnum1,
@@ -54,6 +33,7 @@ namespace WPFLab.Examples.PropertyGridExample {
     class PropertyGridTestDataProxy : ViewModelProxy<PropertyGridTestDataProxy> {
         SomeEnum _enum;
         bool simpleBoolean;
+        private bool? nullableBool;
 
         [Visible]
         public string SomeText { get; set; }
@@ -101,7 +81,19 @@ namespace WPFLab.Examples.PropertyGridExample {
         public string CollapsedProperty { get; set; }
         [Visible]
         [Display(Name = "Nullable bool")]
-        public bool? NullableBool { get; set; }
+        public bool? NullableBool {
+            get => nullableBool;
+            set { 
+                nullableBool = value;
+                UpdateViewProperty(x => x.ReadOnlyChangeableProperty,
+                       view => view.IsReadOnly = nullableBool.HasValue && nullableBool.Value );
+            }
+        }
+
+        [Visible]
+        [Display(Name = "Changeable readonly")]
+        [ReadOnly(true)]
+        public string ReadOnlyChangeableProperty { get; set; }
         [Visible]
         public PropertyGridInnerClassDataProxy InnerClass { get; set; }
 
@@ -121,7 +113,7 @@ namespace WPFLab.Examples.PropertyGridExample {
         }
 
 
-        
+
 
     }
 

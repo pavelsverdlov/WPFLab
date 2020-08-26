@@ -13,6 +13,10 @@
                 <Setter Property="Background" Value="LightPink"/>
                 <Setter Property="ToolTip" Value="{Binding ErrorMessage}"/>
             </DataTrigger>
+            <DataTrigger Binding="{Binding IsReadOnly}" Value="True">
+                <Setter Property="Background" Value="#efebef"/>
+                <Setter Property="BorderBrush" Value="LightGray"/>
+            </DataTrigger>
         </Style.Triggers>
     </Style>
 
@@ -67,7 +71,7 @@
                        VerticalAlignment="Center"/>
             <TextBox Grid.Column="1" Style="{StaticResource validationTextBox}"
                      IsReadOnly="{Binding IsReadOnly}"
-                     VerticalAlignment="Center"
+                     VerticalAlignment="Center" 
                      Text="{Binding Value, UpdateSourceTrigger=PropertyChanged, Delay=200}" 
                      x:Name="editable">
                 <TextBox.InputBindings>
