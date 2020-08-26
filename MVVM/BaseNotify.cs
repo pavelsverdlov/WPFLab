@@ -9,12 +9,21 @@ using System.Windows.Input;
 
 namespace WPFLab.MVVM {
     public abstract class BaseNotify : INotifyPropertyChanged {
-        public virtual bool IsBusy { get; set; }
+        private bool isBusy;
+        readonly Cursor currentCursor;
+        public virtual bool IsBusy { 
+            get => isBusy;
+            set {
+                isBusy = value;
+                Mouse.OverrideCursor = value ? Cursors.Wait : currentCursor;
+            }
+        }
 
         public event PropertyChangedEventHandler? PropertyChanged;
 
         protected BaseNotify() {
-            IsBusy = true;
+            currentCursor = Mouse.OverrideCursor;
+            //IsBusy = true;            
         }
 
         protected void RefreshProperties() {
@@ -32,7 +41,7 @@ namespace WPFLab.MVVM {
             return true;
         }
 
-        protected void SetPropertyChanged([CallerMemberName]string propertyName = "") {
+        protected void SetPropertyChanged([CallerMemberName] string propertyName = "") {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
 

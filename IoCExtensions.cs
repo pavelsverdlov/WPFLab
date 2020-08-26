@@ -4,14 +4,21 @@ using WPFLab.MVVM;
 
 namespace WPFLab {
     public static class IoCExtensions {
-        public static IDependencyRegistrator RegisterView<TView>(this IDependencyRegistrator service) 
+        public static IDependencyRegisterService RegisterView<TView>(this IDependencyRegisterService service) 
             where TView : FrameworkElement {
           
             service.Register<TView>();
 
             return service;
         }
-        public static TView ResolveView<TView, TViewModel>(this IDependencyResolver container) 
+        public static IDependencyRegisterService RegisterTransientView<TView>(this IDependencyRegisterService service)
+           where TView : FrameworkElement {
+
+            service.RegisterTransient<TView>();
+
+            return service;
+        }
+        public static TView ResolveView<TView, TViewModel>(this IDependencyResolverService container) 
             where TView : FrameworkElement
             where TViewModel : BaseNotify {
             
@@ -23,20 +30,6 @@ namespace WPFLab {
             view.Unloaded += (x,y) => vm.OnUnloaded();
 
             return view;
-        }
-
-        public static IDependencyRegistrator RegisterApplication<T>(this IDependencyRegistrator service, T app) where T : LabApplication {
-            service.Register(x => app);
-            return service;
-        }
-
-        public static IDependencyRegistrator RegisterMvvm(this IDependencyRegistrator service) {
-
-            
-            service.Register<IDialogManager>(x => new DialogManager());
-
-
-            return service;
-        }
+        }            
     }
 }

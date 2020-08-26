@@ -16,8 +16,13 @@ namespace WPFLab {
             base.OnStartup(e);
             AppStartup(e, service);
         }
+        protected override void OnExit(ExitEventArgs e) {
+            base.OnExit(e);
+            AppExit(e, service);
+        }
 
-        protected abstract void ConfigureServices(IDependencyRegistrator registrator);
-        protected abstract void AppStartup(StartupEventArgs e, IDependencyResolver resolver);
+        protected abstract void ConfigureServices(IDependencyRegisterService registrator);
+        protected abstract void AppStartup(StartupEventArgs e, IDependencyResolverService resolver);
+        protected abstract void AppExit(ExitEventArgs e, IDependencyResolverService resolver);
     }
 }
