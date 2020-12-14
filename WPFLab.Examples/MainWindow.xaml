@@ -23,7 +23,7 @@
                             Margin="0,10" />
 
             <DockPanel Grid.Row="2">
-                <Button Content="Validate" Height="30" Command="{Binding ValidateCommand}"/>
+                <Button Content="ChangeText" Height="30" Command="{Binding ChangeTextCommand}"/>
             </DockPanel>
         </Grid>
 

@@ -1,10 +1,11 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-                    xmlns:local="clr-namespace:WPFLab.PropertyGrid"
+                    xmlns:grid="clr-namespace:WPFLab.LightPropertyGrid"
+                    xmlns:properties="clr-namespace:WPFLab.LightPropertyGrid.ViewProperties"
                     xmlns:converters="clr-namespace:WPFLab.Converters">
 
     <converters:ReverseBooleanConverter x:Key="ReverseBooleanConverter"/>
-    <local:VisibleModeToVisibilityConvertor x:Key="VisToVisibility"/>
+    <grid:VisibleModeToVisibilityConvertor x:Key="VisToVisibility"/>
 
     <Style x:Key="validationTextBox" TargetType="TextBox" BasedOn="{StaticResource {x:Type TextBox}}">
         <Style.Triggers>
@@ -20,7 +21,7 @@
         </Style.Triggers>
     </Style>
 
-    <DataTemplate DataType="{x:Type local:ComboBoxViewModelProperty}">
+    <DataTemplate DataType="{x:Type properties:ComboBoxViewModelProperty}">
         <DataTemplate.Resources>
         </DataTemplate.Resources>
         <Grid Margin="0,5,0,5" Visibility="{Binding Visible, Converter={StaticResource VisToVisibility}}">
@@ -43,7 +44,7 @@
         </Grid>
     </DataTemplate>
 
-    <DataTemplate DataType="{x:Type local:CheckBoxViewModelProperty}">
+    <DataTemplate DataType="{x:Type properties:CheckBoxViewModelProperty}">
         <Grid Margin="0,5,0,5" Visibility="{Binding Visible, Converter={StaticResource VisToVisibility}}">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="150"/>
@@ -58,7 +59,7 @@
         </Grid>
     </DataTemplate>
 
-    <DataTemplate DataType="{x:Type local:TextBoxViewModelProperty}">
+    <DataTemplate DataType="{x:Type properties:TextBoxViewModelProperty}">
         <DataTemplate.Resources>
         </DataTemplate.Resources>
         <Grid Margin="0,5,0,5" Visibility="{Binding Visible, Converter={StaticResource VisToVisibility}}">
@@ -82,7 +83,7 @@
         </Grid>
     </DataTemplate>
 
-    <DataTemplate DataType="{x:Type local:GroupViewModelProperties}">
+    <DataTemplate DataType="{x:Type properties:GroupViewModelProperties}">
         <StackPanel Orientation="Vertical"  Margin="0,5,0,0"
                     IsEnabled="{Binding IsReadOnly, Converter={StaticResource ReverseBooleanConverter}}"
                     Visibility="{Binding Visible, Converter={StaticResource VisToVisibility}}">

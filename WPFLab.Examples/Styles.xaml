@@ -8,7 +8,7 @@
             
         </ResourceDictionary>
 
-        <ResourceDictionary Source="/WPFLab;component/PropertyGrid/ViewPropertyResources.xaml"/>
+        <ResourceDictionary Source="/WPFLab;component/LightPropertyGrid/ViewPropertyResources.xaml"/>
         
     </ResourceDictionary.MergedDictionaries>
 

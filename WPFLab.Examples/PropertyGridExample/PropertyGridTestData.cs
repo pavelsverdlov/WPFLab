@@ -8,7 +8,7 @@ using System.ComponentModel.DataAnnotations;
 using System.Text;
 using System.Windows.Controls;
 
-using WPFLab.PropertyGrid;
+using WPFLab.LightPropertyGrid;
 
 namespace WPFLab.Examples.PropertyGridExample {
     enum SomeEnum {
@@ -34,14 +34,19 @@ namespace WPFLab.Examples.PropertyGridExample {
         SomeEnum _enum;
         bool simpleBoolean;
         private bool? nullableBool;
+        private string someText;
 
         [Visible]
-        public string SomeText { get; set; }
+        public string SomeText {
+            get => someText;
+            set { 
+                Update(ref someText, value);
+            }
+        }
         [Visible]
         public string Email { get; set; }
         [Visible]
-        [DisplayFormat(DataFormatString = DisplayFormats.MobilePhoneFormatString)]
-        public int Phone { get; set; }
+        public string Phone { get; set; }
 
         [Visible]
         public DateTime Birthday { get; set; }
@@ -83,10 +88,10 @@ namespace WPFLab.Examples.PropertyGridExample {
         [Display(Name = "Nullable bool")]
         public bool? NullableBool {
             get => nullableBool;
-            set { 
+            set {
                 nullableBool = value;
                 UpdateViewProperty(x => x.ReadOnlyChangeableProperty,
-                       view => view.IsReadOnly = nullableBool.HasValue && nullableBool.Value );
+                       view => view.IsReadOnly = nullableBool.HasValue && nullableBool.Value);
             }
         }
 
@@ -104,9 +109,9 @@ namespace WPFLab.Examples.PropertyGridExample {
                 .NotEmpty();
             RuleFor(x => x.Email)
                 .EmailAddress();
-            //RuleFor(x => x.Phone)
-            //    .PhoneNumber()
-            //    .WithMessage("Please enter a valid phone number.");
+            RuleFor(x => x.Phone)
+                .PhoneNumber()
+                .WithMessage("Please enter a valid phone number.");
             InnerClass = new PropertyGridInnerClassDataProxy();
             Email = "bad.com";
             //Phone = "1234";

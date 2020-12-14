@@ -5,7 +5,7 @@ using System.Text;
 using System.Windows;
 using System.Windows.Data;
 
-namespace WPFLab.PropertyGrid {
+namespace WPFLab.LightPropertyGrid {
     public class VisibleModeToVisibilityConvertor : IValueConverter {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture) {
             if(value is VisibleModes vis) {
