@@ -7,8 +7,10 @@ using System.Runtime.CompilerServices;
 using System.Text;
 using System.Windows.Input;
 
+using Microsoft.Toolkit.Mvvm.ComponentModel;
+
 namespace WPFLab.MVVM {
-    public abstract class BaseNotify : INotifyPropertyChanged {
+    public abstract class BaseNotify : ObservableObject {
         private bool isBusy;
         readonly Cursor currentCursor;
         public virtual bool IsBusy { 
@@ -18,9 +20,7 @@ namespace WPFLab.MVVM {
                 Mouse.OverrideCursor = value ? Cursors.Wait : currentCursor;
             }
         }
-
-        public event PropertyChangedEventHandler? PropertyChanged;
-
+        
         protected BaseNotify() {
             currentCursor = Mouse.OverrideCursor;
             //IsBusy = true;            
@@ -41,8 +41,13 @@ namespace WPFLab.MVVM {
             return true;
         }
 
+        /// <summary>
+        /// the same as OnPropertyChanged
+        /// </summary>
+        /// <param name="propertyName"></param>
         protected void SetPropertyChanged([CallerMemberName] string propertyName = "") {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+            OnPropertyChanged(propertyName);
+            //PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
 
         protected void NotifyOfPropertyChange<TProperty>(Expression<Func<TProperty>> property) {

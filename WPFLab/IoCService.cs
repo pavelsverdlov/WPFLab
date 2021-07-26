@@ -10,6 +10,7 @@ using NLog.Extensions.Logging;
 namespace WPFLab {
     public interface IDependencyResolverService {
         T Resolve<T>() where T : class;
+        object Resolve(Type type);
     }
     public interface IDependencyRegisterService {
         IDependencyRegisterService Register<T, TIm>() where T : class where TIm : class, T;
@@ -45,23 +46,28 @@ namespace WPFLab {
         }
 
         public T Resolve<T>() where T : class {
-            if (!IsBuilt) throw new Exception("Service provider is not built.");
+            if (!IsBuilt) throw DependencyInjectionException.ServiceNotBuilt;
             return container.GetService<T>();
         }
+        public object Resolve(Type type) {
+            if (!IsBuilt) throw DependencyInjectionException.ServiceNotBuilt;
+            return container.GetService(type);
+        }
+
         public IDependencyRegisterService Register<T>() where T : class {
-            if (IsBuilt) throw new Exception("Can't register new instance, service provider is already built.");
+            if (IsBuilt) throw DependencyInjectionException.ServiceIsBuilt;
             service.AddScoped<T>();
             IsBuilt = false;
             return this;
         }
         public IDependencyRegisterService RegisterTransient<T>() where T : class {
-            if (IsBuilt) throw new Exception("Can't register new instance, service provider is already built.");
+            if (IsBuilt) throw DependencyInjectionException.ServiceIsBuilt;
             service.AddTransient<T>();
             IsBuilt = false;
             return this;
         }
         public IDependencyRegisterService Register<T>(Func<IServiceProvider, T> implementationFactory) where T : class {
-            if (IsBuilt) throw new Exception("Can't register new instance, service provider is already built.");
+            if (IsBuilt) throw DependencyInjectionException.ServiceIsBuilt;
             service.AddScoped<T>(implementationFactory);
             IsBuilt = false;
             return this;
@@ -69,25 +75,25 @@ namespace WPFLab {
         public IDependencyRegisterService Register<T, TIm>()
             where T : class 
             where TIm : class, T {
-            if (IsBuilt) throw new Exception("Can't register new instance, service provider is already built.");
+            if (IsBuilt) throw DependencyInjectionException.ServiceIsBuilt;
             service.AddScoped<T, TIm>();
             IsBuilt = false;
             return this;
         }
         public IDependencyRegisterService RegisterAsSingleton<T,TIm>() where T : class where TIm : class, T {
-            if (IsBuilt) throw new Exception("Can't register new instance, service provider is already built.");
+            if (IsBuilt) throw DependencyInjectionException.ServiceIsBuilt;
             service.AddSingleton<T, TIm>();
             IsBuilt = false;
             return this;
         }
         public IDependencyRegisterService RegisterAsSingleton<T>() where T : class {
-            if (IsBuilt) throw new Exception("Can't register new instance, service provider is already built.");
+            if (IsBuilt) throw DependencyInjectionException.ServiceIsBuilt;
             service.AddSingleton<T>();
             IsBuilt = false;
             return this;
         }
         public IDependencyRegisterService RegisterAsSingleton<T>(Func<IServiceProvider, T> implementationFactory) where T : class {
-            if (IsBuilt) throw new Exception("Can't register new instance, service provider is already built.");
+            if (IsBuilt) throw DependencyInjectionException.ServiceIsBuilt;
             service.AddSingleton<T>(implementationFactory);
             IsBuilt = false;
             return this;

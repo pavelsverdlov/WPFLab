@@ -19,8 +19,9 @@ namespace WPFLab {
         //    service.Register<IAppLogger, IImp>();
         //    return service;
         //}
-        public static IDependencyRegisterService RegisterMvvm(this IDependencyRegisterService service) {
-            service.Register<IDialogManager>(x => new DialogManager());
+        public static IDependencyRegisterService RegisterDialogManager<TDialogManager>(this IDependencyRegisterService service)
+            where TDialogManager : DialogManager {
+            service.Register<TDialogManager>();
             return service;
         }
 

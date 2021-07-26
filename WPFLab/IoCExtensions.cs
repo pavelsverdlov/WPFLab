@@ -1,4 +1,5 @@
-﻿using System.ComponentModel;
+﻿using System;
+using System.ComponentModel;
 using System.Windows;
 using WPFLab.MVVM;
 
@@ -30,6 +31,18 @@ namespace WPFLab {
             view.Unloaded += (x,y) => vm.OnUnloaded();
 
             return view;
-        }            
+        }
+        public static TView ResolveView<TView>(this IDependencyResolverService container, Type tvm)
+            where TView : FrameworkElement {
+
+            var view = container.Resolve<TView>();
+            var vm = (BaseNotify)container.Resolve(tvm);
+
+            view.DataContext = vm;
+            view.Loaded += (x, y) => vm.OnLoaded();
+            view.Unloaded += (x, y) => vm.OnUnloaded();
+
+            return view;
+        }
     }
 }
