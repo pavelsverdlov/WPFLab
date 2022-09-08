@@ -25,8 +25,7 @@ namespace WPFLab.Examples {
 
                 .Register<MapperService>()
                 .Register<MainViewModel>()
-
-                .RegisterMvvm();
+                ;
         }
     }
 }

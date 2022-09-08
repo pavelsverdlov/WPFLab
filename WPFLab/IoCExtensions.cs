@@ -27,8 +27,8 @@ namespace WPFLab {
             var vm = container.Resolve<TViewModel>();
 
             view.DataContext = vm;
-            view.Loaded += (x,y) => vm.OnLoaded();
-            view.Unloaded += (x,y) => vm.OnUnloaded();
+            view.Loaded += (x,y) => vm?.OnLoaded();
+            view.Unloaded += (x,y) => vm?.OnUnloaded();
 
             return view;
         }

@@ -6,19 +6,19 @@ using System.Windows.Input;
 namespace WPFLab {
     public abstract class BaseWPFCommand : ICommand {
         public event EventHandler CanExecuteChanged = (s, r) => { };
-        public virtual bool CanExecute(object parameter) {
+        public virtual bool CanExecute(object? parameter) {
             return true;
         }
 
-        public abstract void Execute(object parameter);
+        public abstract void Execute(object? parameter);
     }
     public abstract class BaseWPFCommand<TParam> : ICommand {
         public event EventHandler CanExecuteChanged = (s, r) => { };
-        public virtual bool CanExecute(object parameter) {
+        public virtual bool CanExecute(object? parameter) {
             return true;
         }
 
-        public void Execute(object parameter) {
+        public void Execute(object? parameter) {
             if (parameter is TParam param) {
                 Execute(param);
             }
@@ -42,7 +42,7 @@ namespace WPFLab {
             this.action = action;
         }
 
-        public override void Execute(object parameter) {
+        public override void Execute(object? parameter) {
             action?.Invoke();
         }
     }
